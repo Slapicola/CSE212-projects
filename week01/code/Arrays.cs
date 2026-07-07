@@ -13,8 +13,23 @@ public static class Arrays
         // step by step before you write the code. The plan should be clear enough that it could
         // be implemented by another person.
 
-        return []; // replace this return statement with your own
+        // Step 1: write a for loop that goes through 'length' times.
+        // Step 2: In the loop multiply the variable 'number' by i.
+        // Step 3: return the result
+        var MultiplesArray = new double[10];
+        for (double i = number; i < length; i++)
+        {
+            var index = 0;
+            double multiples = number * i;
+            MultiplesArray.SetValue(multiples, index);
+
+        }
+        ;
+
+        return MultiplesArray; // replace this return statement with your own
     }
+    
+    
 
     /// <summary>
     /// Rotate the 'data' to the right by the 'amount'.  For example, if the data is 
