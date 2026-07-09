@@ -14,14 +14,14 @@ public static class Arrays
         // be implemented by another person.
 
         // Step 1: write a for loop that goes through 'length' times.
-        // Step 2: In the loop multiply the variable 'number' by i.
-        // Step 3: return the result
-        var MultiplesArray = new double[10];
-        for (double i = number; i < length; i++)
+        // Step 2: In the loop multiply the variable 'number' by i + 1.
+        // Step 3: Set the calculated value into the array.
+        // Step 4: return the completed array
+        var MultiplesArray = new double[length];
+        for (int i = 0; i < length; i++)
         {
-            var index = 0;
-            double multiples = number * i;
-            MultiplesArray.SetValue(multiples, index);
+            double multiples = number * (i + 1);
+            MultiplesArray.SetValue(multiples, i);
 
         }
         ;
@@ -44,5 +44,13 @@ public static class Arrays
         // Remember: Using comments in your program, write down your process for solving this problem
         // step by step before you write the code. The plan should be clear enough that it could
         // be implemented by another person.
+
+        // Step 1: Get the amount of data from the end
+        // Step 2: Remove that chunk from the end of the list
+        // Step 3: Insert that chunk of data at the beginning of the list
+        var movedData = data.GetRange(data.Count - amount, amount);
+        data.RemoveRange(data.Count - amount, amount);
+        data.InsertRange(0, movedData);
+        
     }
 }
