@@ -39,7 +39,7 @@ public class PriorityQueueTests
     [TestMethod]
     // Scenario: Create a queue where there are multiple data values with high priority. A(9), B(10), C(7), D(10) 
     // Expected Result: B, D, A, C
-    // Defect(s) Found: 
+    // Defect(s) Found: The Dequeue function was updating the index even if there were multiple values with high priority.
     public void TestPriorityQueue_2()
     {
         var a = new PriorityItem("A", 9);
