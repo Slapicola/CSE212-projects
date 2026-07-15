@@ -24,7 +24,17 @@
 
     private static int CountDuplicates(int[] data)
     {
+        var counter = 0;
+        var i = 0;
+
+        for (i = 0; i < data.Length; i++)
+        {
+            if (data.Contains(i))
+            {
+                counter = i + 1;
+            }
+        }
         // Add code here.
-        return 0;
+        return counter;
     }
 }
