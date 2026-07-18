@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Microsoft.VisualBasic;
 
 public static class SetsAndMaps
 {
@@ -22,7 +23,31 @@ public static class SetsAndMaps
     public static string[] FindPairs(string[] words)
     {
         // TODO Problem 1 - ADD YOUR CODE HERE
-        return [];
+        var pairs = new HashSet<string>();
+        var wordList = new List<string>();
+
+
+        foreach (var word in words)
+        {
+            //Skip over doubled letters
+            if (word[0] == word[1])
+                continue;
+                
+            //Reverse the current word
+            var reversedWord = new string(new[] { word[1], word[0] });
+
+
+            //if the reversed word is in the set, add it to the list
+            if (pairs.Contains(reversedWord))
+            {
+                wordList.Add($"{word} & {reversedWord}");
+            }
+
+            pairs.Add(word);
+            
+        }
+        return wordList.ToArray();
+
     }
 
     /// <summary>
@@ -67,7 +92,67 @@ public static class SetsAndMaps
     public static bool IsAnagram(string word1, string word2)
     {
         // TODO Problem 3 - ADD YOUR CODE HERE
-        return false;
+        var letters1 = new Dictionary<char, int>();
+        var letters2 = new Dictionary<char, int>();
+
+
+        //Loop through each letter in word1
+        foreach (char letter in word1)
+        {
+            //If letter is upper case, convert it to lowercase
+            char lowerLetter = char.ToLower(letter);
+
+            //If the letter is a space, skip it.
+            if (lowerLetter == ' ')
+            {
+                continue;
+            }
+
+            //If the dictionary has that letter, increase count
+            if (letters1.ContainsKey(lowerLetter))
+            {
+                letters1[lowerLetter]++;
+
+            }
+            else
+            {
+                letters1.Add(lowerLetter, 1);
+            }
+        }
+
+        //Loop through each letter in word2
+        foreach (char letter in word2)
+        {
+            //If letter is upper case, convert it to lowercase
+            char lowerLetter = char.ToLower(letter);
+
+            //If the letter is a space, skip it.
+            if (lowerLetter == ' ')
+            {
+                continue;
+            }
+
+            //If the dictionary has that letter, increase count
+            if (letters2.ContainsKey(lowerLetter))
+            {
+                letters2[lowerLetter]++;
+
+            }
+            else
+            {
+                letters2.Add(lowerLetter, 1);
+            }
+        }
+        
+        //Compare the two dictionaries for equal length and the same amount of each letter.
+        foreach(char key in letters1.Keys)
+        {
+            if (!letters2.ContainsKey(key) || letters1[key] != letters2[key])
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
     /// <summary>
@@ -101,6 +186,11 @@ public static class SetsAndMaps
         // on those classes so that the call to Deserialize above works properly.
         // 2. Add code below to create a string out each place a earthquake has happened today and its magitude.
         // 3. Return an array of these string descriptions.
-        return [];
+
+        string[] earthquakeProperties = featureCollection.features.Select(f => $"{f.properties.place} - Mag {f.properties.mag}").ToArray();
+
+
+
+        return earthquakeProperties;
     }
 }
