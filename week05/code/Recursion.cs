@@ -15,7 +15,11 @@ public static class Recursion
     public static int SumSquaresRecursive(int n)
     {
         // TODO Start Problem 1
-        return 0;
+        if (n <= 0) //base case
+        {
+            return 0;
+        }
+        return n * n + SumSquaresRecursive(n - 1); //Smaller problem so that the function does not run forever
     }
 
     /// <summary>
@@ -40,6 +44,25 @@ public static class Recursion
     public static void PermutationsChoose(List<string> results, string letters, int size, string word = "")
     {
         // TODO Start Problem 2
+        if (word.Length == size) //Base case
+        {
+            results.Add(word);
+        }
+        else
+        //Go throught the string of letters 
+        {
+            for (var i = 0; i < letters.Length; i++)
+            {
+                //remove the letter choosen
+                var lettersLeft = letters.Remove(i, 1);
+                var newWord = word + letters[i];
+                if(newWord.Length <= size)
+                {
+                    PermutationsChoose(results, lettersLeft, size, newWord);
+                }
+            }
+        }
+        
     }
 
     /// <summary>
@@ -86,6 +109,12 @@ public static class Recursion
     /// </summary>
     public static decimal CountWaysToClimb(int s, Dictionary<int, decimal>? remember = null)
     {
+        //if this is the first time calling the function, then we need to create the dictionary.
+        if(remember == null)
+        {
+            remember = new Dictionary<int, decimal>();
+        }
+
         // Base Cases
         if (s == 0)
             return 0;
@@ -97,9 +126,15 @@ public static class Recursion
             return 4;
 
         // TODO Start Problem 3
+        //Check if 's' value has already been used, return that value for use
+        if (remember.ContainsKey(s))
+        {
+            return remember[s];
+        }
 
         // Solve using recursion
-        decimal ways = CountWaysToClimb(s - 1) + CountWaysToClimb(s - 2) + CountWaysToClimb(s - 3);
+        decimal ways = CountWaysToClimb(s - 1, remember) + CountWaysToClimb(s - 2, remember) + CountWaysToClimb(s - 3, remember);
+        remember[s] = ways;
         return ways;
     }
 
@@ -119,6 +154,21 @@ public static class Recursion
     public static void WildcardBinary(string pattern, List<string> results)
     {
         // TODO Start Problem 4
+        var wildcardPosition = pattern.IndexOf("*"); //Position of an asterisk '*'
+
+        
+        //base case, when the wildcard doesn't exist
+        if (wildcardPosition == -1)
+        {
+            results.Add(pattern); //If there are no wildcards, add the pttern to the results list
+            return;
+        } else //split the pattern at the wildcard position and remove one of them
+        {
+            var part1 = pattern[..wildcardPosition]; //First part of the pattern, in front of the wildcard
+            var part2 = pattern[wildcardPosition..]; //part of the pattern that is the wildcard to the end of the pattern
+            WildcardBinary(part1 + "0" + part2.Remove(0, 1), results);
+            WildcardBinary(part1 + "1" + part2.Remove(0, 1), results);
+        }
     }
 
     /// <summary>
